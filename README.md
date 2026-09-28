@@ -1,6 +1,6 @@
 # Moje poznámky k C++ z materiálů
 
-U ukázek převzatých ze ZIPu mám napsaný zdroj. 
+U ukázek převzatých ze souboru mám napsaný zdroj. 
 
 ## 1. `.h` a `.cpp`
 
@@ -42,8 +42,6 @@ Vybaveni::~Vybaveni() {
 
 Abstraktní třída je společný základ pro potomky a sama se většinou nevytváří. Když má metoda na konci `= 0`, každý potomek si musí udělat její vlastní verzi.
 
-Tahle kostra je přímo ze ZIPu.
-
 Zdroj: `priklady-z-hodin/2025-2026LS/TEST5/Vybaveni.h`
 
 ```cpp
@@ -69,7 +67,7 @@ public:
 
 **Co kód dělá:** Definuje abstraktní rodičovskou třídu. Uchovává společné údaje, statický čítač, gettery, virtuální metodu a povoluje výpis přes `operator<<`.
 
-Další čistě virtuální metoda ze ZIPu:
+Další čistě virtuální metoda ze souboru:
 
 Zdroj: `03-pokrocile-cpp/09-polymorfismus/main.cpp`
 
@@ -79,7 +77,7 @@ virtual void udelejZvuk() = 0;
 
 **Co kód dělá:** Nařizuje každému potomkovi, aby vytvořil vlastní verzi metody `udelejZvuk()`.
 
-Přidávání do vektoru ze ZIPu:
+Přidávání do vektoru ze souboru:
 
 Zdroj: `03-pokrocile-cpp/14-uvod-do-stl/main.cpp`
 
@@ -98,7 +96,7 @@ cisla.push_back(20);
 
 Vektor můžu vrátit jako kopii, měnitelnou referenci nebo konstantní referenci. Nejvíc si hlídám znak `&` a `const`, protože podle nich poznám, jestli pracuji s původním vektorem a jestli ho smím změnit.
 
-Vrácení kopie vektoru je v ZIPu.
+Vrácení kopie vektoru.
 
 Zdroj: `priklady-z-hodin/2025-2026LS/soutez_1/task_1/main.cpp`
 
@@ -112,7 +110,7 @@ std::vector<int> loadDepthData(std::string filename) {
 
 **Co kód dělá:** Funkce vytvoří vektor a vrátí ho hodnotou. Volající tedy dostane výsledný vektor.
 
-Použití konstantní reference na vektor je také v ZIPu, ale jako parametr funkce.
+Použití konstantní reference na vektor je také v souborech, ale jako parametr funkce.
 
 Zdroj: `03-pokrocile-cpp/14-uvod-do-stl/main.cpp`
 
@@ -337,8 +335,6 @@ for (double x : historie)
 ## 6. Polymorfismus a mazání paměti
 
 Do jednoho vektoru ukazatelů na rodiče můžu dát různé potomky a přes `virtual` se vždy zavolá správná metoda. Co vytvořím pomocí `new`, musím nakonec smazat pomocí `delete`, jinak zůstane zabraná paměť.
-
-Tahle varianta je přímo ze ZIPu.
 
 Zdroj: `03-pokrocile-cpp/09-polymorfismus/main.cpp`
 
@@ -663,7 +659,7 @@ Další algoritmy skutečně obsažené v ZIPu, ale zde nerozepsané: `sort`, `f
 
 ### Volání přes objekt a přes ukazatel
 
-Přímé volání na objektu ze ZIPu:
+Přímé volání na objektu ze souboru:
 
 Zdroj: `03-pokrocile-cpp/09-polymorfismus/main.cpp`
 
@@ -974,7 +970,7 @@ Použití: `objekt *= 2;`
 
 ### Porovnání vypočítaných hodnot
 
-Přímý vzor `operator==` je v ZIPu u `Vektor2D`. Pro tvary se může porovnávaný výraz změnit na výsledek metody.
+Přímý vzor `operator==` je v souboru u `Vektor2D`. Pro tvary se může porovnávaný výraz změnit na výsledek metody.
 
 **Porovnání vypočítaných hodnot:**
 
@@ -1054,7 +1050,7 @@ Přesný test z `TEST5/main.cpp` ukazuje doporučené pořadí:
 7. zavolat `delete`,
 8. vypsat konečný čítač.
 
-Vytvoření objektů ze ZIPu:
+Vytvoření objektů ze souboru:
 
 ```cpp
 PalnaZbran* zbran1 = new PalnaZbran("M4A1", 3.5, 800);
@@ -1062,7 +1058,7 @@ PalnaZbran* zbran2 = new PalnaZbran("M203", 1.5, 100);
 BalistickaOchrana* ochrana = new BalistickaOchrana("Vesta-NIJ4", 5.0, 4);
 ```
 
-Polymorfní pole ze ZIPu:
+Polymorfní pole ze souboru:
 
 ```cpp
 Vybaveni* pole[3] = { zbran1, zbran2, ochrana };
@@ -1071,7 +1067,7 @@ for (int i = 0; i < 3; i++) {
 }
 ```
 
-Úklid ze ZIPu:
+Úklid ze souboru:
 
 ```cpp
 delete zbran1;
