@@ -385,7 +385,7 @@ virtual ~Zvire()
 
 ---
 
-## 7. Operátory nalezené v ZIPu
+## 7. Operátory nalezené v souboru
 
 U operátoru si hlídám zápis v `.h` a potom celé tělo v `.cpp`. Když operátor mění přímo můj objekt, většinou vracím `*this`; když jen porovnává nebo čte, bývá na konci `const`.
 
@@ -651,7 +651,7 @@ return vysledek;
 
 **Co kód dělá:** Vytvoří nový vektor pouze z prvků splňujících podmínku. Původní vektor nemění.
 
-Další algoritmy skutečně obsažené v ZIPu, ale zde nerozepsané: `sort`, `find`, `find_if`, `count_if`, `transform`, `for_each`, `accumulate`, binární vyhledávání, selection sort, bubble sort, insertion sort, merge sort, quick sort a grafové algoritmy.
+Další algoritmy skutečně obsažené v souboru, ale zde nerozepsané: `sort`, `find`, `find_if`, `count_if`, `transform`, `for_each`, `accumulate`, binární vyhledávání, selection sort, bubble sort, insertion sort, merge sort, quick sort a grafové algoritmy.
 
 ---
 
@@ -779,7 +779,7 @@ Po `erase` se nepíše další `++it`, protože `erase` vrátí novou platnou po
 
 ### Vektor celočíselných hodnot
 
-V ZIPu jsou běžné vektory celých čísel.
+V souboru jsou běžné vektory celých čísel.
 
 Zdroj: `03-pokrocile-cpp/14-uvod-do-stl/main.cpp`
 
@@ -792,7 +792,7 @@ Podle zadání se změní název vektoru a přidávaná hodnota.
 
 ### Kontrola platného rozsahu
 
-Nejbližší skutečná kontrola rozsahu v ZIPu:
+Nejbližší skutečná kontrola rozsahu v souboru:
 
 Zdroj: `priklady-z-hodin/2025-2026LS/uvodni_test/main.cpp`
 
@@ -925,7 +925,7 @@ double PotomekB::vypocitejHodnotu() const
 
 ### Změna číselných atributů
 
-V ZIPu je ukázka změny rozměru objektu pomocí setteru.
+V souboru je ukázka změny rozměru objektu pomocí setteru.
 
 Zdroj: `03-pokrocile-cpp/06-uvod-do-oop/main.cpp`
 
@@ -983,7 +983,7 @@ bool PotomekA::operator==(const PotomekA& druhy) const
 
 ### Největší poměr sousedních hodnot
 
-V ZIPu je přímo indexový průchod a porovnání sousedů:
+V souboru je přímo indexový průchod a porovnání sousedů:
 
 Zdroj: `priklady-z-hodin/2025-2026LS/soutez_1/task_1/main.cpp`
 
@@ -1019,7 +1019,7 @@ for (Zaklad* objekt : objekty)
         vysledek.push_back(objekt);
 ```
 
-Pokud zadání požaduje sestupné řazení výsledku, v ZIPu je tento tvar `sort` s lambdou:
+Pokud zadání požaduje sestupné řazení výsledku, v souboru je tento tvar `sort` s lambdou:
 
 Zdroj: `03-pokrocile-cpp/16-lambda-a-algoritmy/main.cpp`
 
