@@ -266,167 +266,184 @@ Po smazání objektů lze vektor vyprázdnit. Správné pořadí je nejdřív `d
 ---
 
 <a id="operatory"></a>
-## Všechny operátory
+## 7. Operátory nalezené v souboru
 
-U operátoru kontroluji:
-
-1. co přijímá,
-2. zda mění aktuální objekt,
-3. co musí vrátit,
-4. zda má být na konci `const`,
-5. zda jde o členskou, nebo `friend` funkci.
+U operátoru si hlídám zápis v `.h` a potom celé tělo v `.cpp`. Když operátor mění přímo můj objekt, většinou vracím `*this`; když jen porovnává nebo čte, bývá na konci `const`.
 
 <a id="operator-rovna-se"></a>
-### `operator==`
+### `==`
 
-Porovnává dva objekty a vrací `bool`. Objekt nemění, proto bývá metoda `const`.
+Zdroj: `03-pokrocile-cpp/10-pretezovani-operatoru/main.cpp`
 
 ```cpp
-bool operator==(const Trida& druhy) const;
+bool operator==(const Vektor2D& other) const
+{
+    return (x == other.x) && (y == other.y);
+}
 ```
 
-Uvnitř porovnám atribut nebo vypočítanou hodnotu určenou zadáním.
+**Co kód dělá:** Vrátí `true`, pouze pokud se shodují obě souřadnice porovnávaných objektů.
 
 <a id="operator-plus"></a>
-### `operator+`
+### `+`
 
-Obvykle vytvoří a vrátí nový objekt. Původní objekty nemění.
+Zdroj: `priklady-z-hodin/2025-2026LS/TEST5/PalnaZbran.cpp`
 
 ```cpp
-Trida operator+(const Trida& druhy) const;
+PalnaZbran PalnaZbran::operator+(const PalnaZbran& other) const {
+    return PalnaZbran(
+        getKodOznaceni() + " a " + other.getKodOznaceni(),
+        getHmotnost() + other.getHmotnost(),
+        kadence + other.kadence
+    );
+}
 ```
 
-Pozor: `+` většinou není totéž jako `+=`. Operátor `+` vytváří výsledek, zatímco `+=` mění levý objekt.
+**Co kód dělá:** Sečte údaje dvou zbraní a vrátí nový objekt `PalnaZbran`. Původní objekty nemění.
 
 <a id="operator-vystup"></a>
-### `operator<<`
+### `<<`
 
-Umožní zápis `cout << objekt`. Často jde o `friend` funkci:
-
-```cpp
-friend ostream& operator<<(ostream& os, const Trida& objekt);
-```
-
-Na konci vrací stejný proud:
+Zdroj: `priklady-z-hodin/2025-2026LS/TEST5/Vybaveni.h`
 
 ```cpp
-return os;
+friend std::ostream& operator<<(std::ostream& os, const Vybaveni& vybaveni);
 ```
 
-Díky tomu funguje řetězení `cout << objekt << endl`.
+**Co kód dělá:** Povolí funkci `operator<<` přístup k atributům objektu a umožní zápis `cout << objekt`.
+
+Zdroj: `priklady-z-hodin/2025-2026LS/TEST5/Vybaveni.cpp`
+
+```cpp
+std::ostream& operator<<(std::ostream& os, const Vybaveni& vybaveni) {
+    os << vybaveni.kodOznaceni << " (hmotnost: " << vybaveni.hmotnost << " kg)";
+    return os;
+}
+```
+
+**Co kód dělá:** Vloží údaje objektu do výstupního proudu a proud vrátí, aby šlo pokračovat dalším `<<`.
 
 <a id="operator-porovnani"></a>
-### `operator<` a `operator>`
+### `<` a `>`
 
-Vrací `bool` a porovnávají hodnotu určenou zadáním:
+Zdroj: `priklady-z-hodin/2025-2026/linked-list-templates-dedicnost/Student.cpp`
 
 ```cpp
-bool operator<(const Trida& druhy) const;
-bool operator>(const Trida& druhy) const;
+bool Student::operator>(const Student& other) const {
+    return this->prumer > other.prumer;
+}
+
+bool Student::operator<(const Student& other) const {
+    return this->prumer < other.prumer;
+}
 ```
 
-Mohou se používat při řazení objektů.
+**Co kód dělá:** Porovná dva studenty podle průměru. Tyto operátory lze použít například při řazení.
 
 <a id="operator-index"></a>
-### `operator[]`
+### `[]`
 
-Umožní přístup zápisem `objekt[index]`.
+Hranaté závorky slouží k přístupu podle indexu. V konkrétním zadání nemusí vracet právě `Node*`; mohou vracet například `double&`, pokud se má pomocí `objekt[index]` číst nebo měnit hodnota ve vektoru. Návrat reference poznám podle znaku `&`.
+
+Zdroj: `priklady-z-hodin/2025-2026/sprava-studentu/main.cpp`
 
 ```cpp
-double& operator[](int index);
+Node *operator[](int index)
+{
+    Node *current = this;
+    for (int i = 0; i < index; i++)
+    {
+        if (current == nullptr)
+            return nullptr;
+        current = current->next;
+    }
+    return current;
+}
 ```
 
-Reference dovoluje hodnotu nejen přečíst, ale také změnit. Návratový typ se řídí tím, co kolekce obsahuje.
+**Co kód dělá:** Postupuje spojovým seznamem na požadovaný index. Vrátí nalezený uzel, nebo `nullptr`, pokud cesta skončí.
 
 <a id="operator-nasobeni"></a>
-### `operator*`
+### `*`
 
-Význam není pevně daný. Může násobit hodnoty, spojovat význam objektů nebo například opakovat text. Rozhoduje zadání.
+Zdroj: `priklady-z-hodin/2025-2026/pretezovani/main.cpp`
 
 ```cpp
-Trida operator*(double hodnota) const;
+std::string operator*(char a, A b){
+    std::string test = "";
+    for (int i = 0; i<b.value;i++){
+        test+=a;
+    }
+    return test;
+}
 ```
 
-Pokud má být vlevo jiný typ než objekt, může být potřeba samostatná `friend` funkce.
+**Co kód dělá:** Zopakuje znak `a` tolikrát, kolik určuje `b.value`, a vrátí vytvořený text.
+
+### Další operátory
 
 <a id="operator-plus-rovna-se"></a>
-### `operator+=`
-
-Mění aktuální objekt a obvykle vrací `*this` jako referenci:
+**Operátor `+=`:**
 
 ```cpp
-Trida& operator+=(double hodnota);
+Potomek& Potomek::operator+=(double hodnota)
+{
+    /* změna objektu */
+    return *this;
+}
 ```
 
-Typický konec implementace:
-
-```cpp
-return *this;
-```
+**Co kód dělá:** Upraví současný objekt a pomocí `return *this` vrátí odkaz na právě upravený objekt.
 
 <a id="operator-krat-rovna-se"></a>
-### `operator*=`
-
-Má stejný princip jako `+=`, ale obvykle mění objekt pomocí koeficientu.
-
-```cpp
-Trida& operator*=(double koeficient);
-```
-
-Po změně atributů může být nutné přepočítat výsledek nebo uložit novou hodnotu do historie.
+**Operátor `*=`.** Má stejný obecný princip jako `+=`.
 
 <a id="operator-prefix-plus-plus"></a>
-### Prefixový `operator++`
-
-Zápis `++objekt` nejdřív objekt změní a potom vrátí změněný objekt.
+**Prefixové `++`:**
 
 ```cpp
-Trida& operator++();
+Potomek& Potomek::operator++()
+{
+    parametr++;
+    return *this;
+}
 ```
 
-Vrací referenci na `*this`.
+**Co kód dělá:** Prefixová verze nejdřív zvýší atribut a potom vrátí už změněný objekt.
 
 <a id="operator-postfix-plus-plus"></a>
-### Postfixový `operator++`
-
-Zápis `objekt++` vrací původní stav. Parametr `int` pouze rozlišuje postfixovou verzi.
+**Postfixové `++`:**
 
 ```cpp
-Trida operator++(int);
+Potomek Potomek::operator++(int)
+{
+    Potomek puvodni = *this;
+    parametr++;
+    return puvodni;
+}
 ```
 
-Princip: uložit kopii původního objektu, změnit aktuální objekt a vrátit původní kopii.
+**Co kód dělá:** Postfixová verze si uloží původní stav, zvýší objekt a vrátí kopii původního stavu. Parametr `int` pouze rozlišuje postfixový zápis.
 
 <a id="operator-minus-minus"></a>
-### `operator--`
-
-Má stejný rozdíl mezi prefixovou a postfixovou verzí jako `++`:
-
-```cpp
-Trida& operator--();
-Trida operator--(int);
-```
-
-Je potřeba hlídat případné omezení, například aby hodnota neklesla pod povolené minimum.
+**Přetížené `--`.**
 
 <a id="operator-zavorky"></a>
-### `operator()`
-
-Umožní použít objekt jako funkci:
+**Operátor `()`:**
 
 ```cpp
-objekt(hodnota)
+double Potomek::operator()() const
+{
+    return parametr;
+}
 ```
 
-Deklarace závisí na požadovaném výsledku:
+**Co kód dělá:** Umožní použít objekt jako funkci, například `objekt()`, a vrátí požadovanou hodnotu.
 
-```cpp
-bool operator()(int hodnota) const;
-```
-
-Může například testovat podmínku, vracet počet výskytů nebo přidávat hodnotu. Přesný význam vždy určuje zadání.
+Kulaté závorky mohou mít uvnitř parametr. Potom zápis jako `objekt(hodnota)` zavolá `operator()` a může například přidat změnu do historie. Jestli metoda nic nevrací, její návratový typ je `void`; takové volání nevkládám přímo do `cout`.
 
 ---
+
 
 <a id="algoritmy"></a>
 ## Algoritmy
