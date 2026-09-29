@@ -2,6 +2,22 @@
 
 U ukázek převzatých ze souboru mám napsaný zdroj. 
 
+## Rychlé odkazy na operátory
+
+- [`operator==`](#operator-rovna-se)
+- [`operator+`](#operator-plus)
+- [`operator<<`](#operator-vystup)
+- [`operator<` a `operator>`](#operator-porovnani)
+- [`operator[]`](#operator-index)
+- [`operator*`](#operator-nasobeni)
+- [`operator+=`](#operator-plus-rovna-se)
+- [Prefixový `operator++`](#operator-prefix-plus-plus)
+- [Postfixový `operator++`](#operator-postfix-plus-plus)
+- [`operator()`](#operator-zavorky)
+- [`operator*=`](#operator-krat-rovna-se)
+- [Co můžu napsat do `analyzuj()`](#co-napsat-do-analyzuj)
+- [Algoritmy](#algoritmy)
+
 ## 1. `.h` a `.cpp`
 
 Do `.h` si píšu hlavně názvy atributů a deklarace metod, tedy co moje třída bude mít a umět. Do `.cpp` potom dopíšu, co mají jednotlivé metody opravdu dělat.
@@ -235,6 +251,7 @@ void PalnaZbran::pripravKAkci() {
 
 **Co kód dělá:** Přepisuje čistě virtuální metodu a vypíše údaje konkrétní palné zbraně.
 
+<a id="co-napsat-do-analyzuj"></a>
 ### Co můžu napsat do `analyzuj()`
 
 #### Počítání podle podmínky
@@ -389,6 +406,7 @@ virtual ~Zvire()
 
 U operátoru si hlídám zápis v `.h` a potom celé tělo v `.cpp`. Když operátor mění přímo můj objekt, většinou vracím `*this`; když jen porovnává nebo čte, bývá na konci `const`.
 
+<a id="operator-rovna-se"></a>
 ### `==`
 
 Zdroj: `03-pokrocile-cpp/10-pretezovani-operatoru/main.cpp`
@@ -402,6 +420,7 @@ bool operator==(const Vektor2D& other) const
 
 **Co kód dělá:** Vrátí `true`, pouze pokud se shodují obě souřadnice porovnávaných objektů.
 
+<a id="operator-plus"></a>
 ### `+`
 
 Zdroj: `priklady-z-hodin/2025-2026LS/TEST5/PalnaZbran.cpp`
@@ -418,6 +437,7 @@ PalnaZbran PalnaZbran::operator+(const PalnaZbran& other) const {
 
 **Co kód dělá:** Sečte údaje dvou zbraní a vrátí nový objekt `PalnaZbran`. Původní objekty nemění.
 
+<a id="operator-vystup"></a>
 ### `<<`
 
 Zdroj: `priklady-z-hodin/2025-2026LS/TEST5/Vybaveni.h`
@@ -439,6 +459,7 @@ std::ostream& operator<<(std::ostream& os, const Vybaveni& vybaveni) {
 
 **Co kód dělá:** Vloží údaje objektu do výstupního proudu a proud vrátí, aby šlo pokračovat dalším `<<`.
 
+<a id="operator-porovnani"></a>
 ### `<` a `>`
 
 Zdroj: `priklady-z-hodin/2025-2026/linked-list-templates-dedicnost/Student.cpp`
@@ -455,6 +476,7 @@ bool Student::operator<(const Student& other) const {
 
 **Co kód dělá:** Porovná dva studenty podle průměru. Tyto operátory lze použít například při řazení.
 
+<a id="operator-index"></a>
 ### `[]`
 
 Hranaté závorky slouží k přístupu podle indexu. V konkrétním zadání nemusí vracet právě `Node*`; mohou vracet například `double&`, pokud se má pomocí `objekt[index]` číst nebo měnit hodnota ve vektoru. Návrat reference poznám podle znaku `&`.
@@ -477,6 +499,7 @@ Node *operator[](int index)
 
 **Co kód dělá:** Postupuje spojovým seznamem na požadovaný index. Vrátí nalezený uzel, nebo `nullptr`, pokud cesta skončí.
 
+<a id="operator-nasobeni"></a>
 ### `*`
 
 Zdroj: `priklady-z-hodin/2025-2026/pretezovani/main.cpp`
@@ -495,6 +518,7 @@ std::string operator*(char a, A b){
 
 ### Další operátory
 
+<a id="operator-plus-rovna-se"></a>
 **Operátor `+=`:**
 
 ```cpp
@@ -509,6 +533,7 @@ Potomek& Potomek::operator+=(double hodnota)
 
 **Operátor `*=`.** Má stejný obecný princip jako `+=`.
 
+<a id="operator-prefix-plus-plus"></a>
 **Prefixové `++`:**
 
 ```cpp
@@ -521,6 +546,7 @@ Potomek& Potomek::operator++()
 
 **Co kód dělá:** Prefixová verze nejdřív zvýší atribut a potom vrátí už změněný objekt.
 
+<a id="operator-postfix-plus-plus"></a>
 **Postfixové `++`:**
 
 ```cpp
@@ -536,6 +562,7 @@ Potomek Potomek::operator++(int)
 
 **Přetížené `--`.**
 
+<a id="operator-zavorky"></a>
 **Operátor `()`:**
 
 ```cpp
@@ -551,6 +578,7 @@ Kulaté závorky mohou mít uvnitř parametr. Potom zápis jako `objekt(hodnota)
 
 ---
 
+<a id="algoritmy"></a>
 ## 8. Algoritmy
 
 Algoritmus si můžu napsat jako samostatnou funkci nad `main()` a předat mu objekt nebo vektor, se kterým má pracovat. Nejdřív si řeknu, jestli chci počet, součet, průměr, maximum, mazání nebo nový vektor, a podle toho si připravím proměnné.
@@ -954,6 +982,7 @@ parametrB *= koeficient;
 parametr *= koeficient;
 ```
 
+<a id="operator-krat-rovna-se"></a>
 ### `operator*=`
 
 **Změna hodnot operátorem:**
